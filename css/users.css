@@ -1,0 +1,88 @@
+h2{
+	text-align: center;
+}
+table{
+	margin: 1em auto;
+	text-align: center;
+}
+	table td{
+		padding: 0.5em;
+	}
+#filtros,#mnC{
+	display: flex;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+}
+#genT{
+	background: #EEECED;
+	padding: 1em 0;
+}
+	#genT h2{
+		text-align: center;
+	}
+	#mnC a{
+		background: #005BAF;
+		color: #fff;
+		padding: 0 1em;
+		text-decoration: none;
+	}
+	#mnC a:hover,#mnB a:active{
+		background: #002457;
+	}
+#preib,#precdosib,#ccfus{
+	margin: 0 auto;
+	width: 90%;
+}
+.flxB{
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+	padding-top: 1em;
+}
+	.flxB figure{
+		margin-bottom: 1em;
+		width: 35%;
+	}
+.foofform,.foofformBb{
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+	margin: 1em 0;
+}
+	.foofform input[type=number]{
+		width: 50px;
+	}
+	.foofformBb input[type=number]{
+		width: 250px;
+	}
+.tdscajaocl{
+	height: 0;
+	overflow: hidden;
+}
+.users{
+	display: flex;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+	padding-bottom: 1em;
+}
+@media screen and (max-width: 800px){
+	.flxB,.foofform,.foofformBb,.users{
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+	}
+		.flxB article,.flxB figure{
+			margin: 1em auto;
+			width: 90%;
+		}
+}

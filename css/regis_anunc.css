@@ -1,0 +1,91 @@
+#preib,#precdosib{
+	margin: 0 auto;
+	width: 90%;
+}
+#restanunc{
+	margin: 0 auto;
+	padding: 1em 0;
+	width: 90%;
+}
+	#restanunc #nvimgimb{
+		padding: 0.5em 1em;
+	}
+	#restanunc #termprc{
+		padding: 0.5em 1em;
+	}
+.flxB{
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+	padding-top: 1em;
+}
+	.flxB figure{
+		margin-bottom: 1em;
+		width: 35%;
+	}
+.flexreg{
+	display: flex;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+	margin: 1em 0;
+}
+	.flexreg h2{
+		text-align: center;
+	}
+	.flexreg hgroup h3,.flexreg hgroup h4{
+		margin: 0;
+	}
+	.flexreg #anuncio,.flexreg #ingreso{
+		width: 40%;
+	}
+.foofform,.foofformBb{
+	display: flex;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	-webkit-justify-content: space-around;
+	-ms-justify-content: space-around;
+	justify-content: space-around;
+	margin: 1em 0;
+}
+	.foofform input[type=number]{
+		width: 50px;
+	}
+	.foofformBb input[type=number]{
+		width: 250px;
+	}
+@media screen and (max-width: 800px){
+	.flexreg{
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+	}
+		.flexreg #anuncio{
+			-webkit-order: 2;
+			-ms-order: 2;
+			order: 2;
+		}
+		.flexreg #ingreso{
+			-webkit-order: 1;
+			-ms-order: 1;
+			order: 1;
+		}
+		.flexreg #anuncio,.flexreg #ingreso{
+			margin: 1em auto;
+			width: 90%;
+		}
+	.flxB,.foofform,.foofformBb{
+		-webkit-flex-direction: column;
+		-ms-flex-direction: column;
+		flex-direction: column;
+	}
+		.flxB article,.flxB figure{
+			margin: 1em auto;
+			width: 90%;
+		}
+}
