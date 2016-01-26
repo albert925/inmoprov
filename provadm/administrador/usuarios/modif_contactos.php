@@ -1,14 +1,14 @@
 <?php
 	include '../../../config.php';
-	$idR=$_POST['fcd'];
-	$a=$_POST['a'];
-	$b=$_POST['b'];
+	$idR=segcon($conexion,$_POST['fcd']);
+	$a=segcon($conexion,$_POST['a']);
+	$b=segcon($conexion,$_POST['b']);
 	if ($idR=="" || $a=="" || $b=="") {
 		echo "1";
 	}
 	else{
 		$modificar="UPDATE otros_cont set nam_cont='$a',num_cont='$b' where id_cont=$idR";
-		mysql_query($modificar,$conexion) or die (mysql_error());
+		$conexion->query($modificar) or die (mysqli_error());
 		echo "2";
 	}
 ?>

@@ -4,8 +4,8 @@
 	if (isset($_SESSION['us'])) {
 		$rcusus=$_SESSION['us'];
 		$datosusers="SELECT * from usuarios where id_us=$rcusus";
-		$sql_dtus=mysql_query($datosusers,$conexion) or die (mysql_error());
-		while ($us=mysql_fetch_array($sql_dtus)) {
+		$sql_dtus=$conexion->query($datosusers) or die (mysqli_error());
+		while ($us=$sql_dtus->fetch_assoc()) {
 			$idus=$us['id_us'];
 			$ccus=$us['cc_us'];
 			$nmus=$us['nom_ap_us'];
@@ -22,8 +22,8 @@
 		function Nomtipos($dato,$serv)
 		{
 			$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-			$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-			while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+			$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+			while ($wtp=$sql_sacartipo->fetch_assoc()) {
 				$namwtp=$wtp['nam_tp'];
 			}
 			return $namwtp;
@@ -31,10 +31,10 @@
 		function NomBarr($dato,$serv)
 		{
 			$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-			$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-			$numbarrio=mysql_num_rows($sql_sacbarr);
+			$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+			$numbarrio=$sql_sacbarr->num_rows;
 			if ($numbarrio>0) {
-				while ($brw=mysql_fetch_array($sql_sacbarr)) {
+				while ($brw=$sql_sacbarr->fetch_assoc()) {
 					$nambarw=$brw['nam_barr'];
 				}
 			}
@@ -128,8 +128,8 @@
 						<option value="0">Seleccione</option>
 						<?php
 							$Tddepart="SELECT * from departamentos order by nam_depart asc";
-							$sql_tddepar=mysql_query($Tddepart,$conexion) or die (mysql_error());
-							while ($dp=mysql_fetch_array($sql_tddepar)) {
+							$sql_tddepar=$conexion->query($Tddepart) or die (mysqli_error());
+							while ($dp=$sql_tddepar->fetch_assoc()) {
 								$idpd=$dp['id_depart'];
 								$nmdp=$dp['nam_depart'];
 								if ($idpd==$dpus) {
@@ -150,8 +150,8 @@
 						<option value="0">Seleccione</option>
 						<?php
 							$Tmunis="SELECT * from municipios order by nam_muni asc";
-							$sql_muni=mysql_query($Tmunis,$conexion) or die (mysql_error());
-							while ($sm=mysql_fetch_array($sql_muni)) {
+							$sql_muni=$conexion->query($Tmunis) or die (mysqli_error());
+							while ($sm=$sql_muni->fetch_assoc()) {
 								$idmn=$sm['id_municipio'];
 								$nmmn=$sm['nam_muni'];
 								if ($idmn==$mnus) {

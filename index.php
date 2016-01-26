@@ -4,8 +4,8 @@
 	if (isset($_SESSION['us'])) {
 		$rcusus=$_SESSION['us'];
 		$datosusers="SELECT * from usuarios where id_us=$rcusus";
-		$sql_dtus=mysql_query($datosusers,$conexion) or die (mysql_error());
-		while ($us=mysql_fetch_array($sql_dtus)) {
+		$sql_dtus=$conexion->query($datosusers) or die (mysqli_error());
+		while ($us=$sql_dtus->fetch_assoc()) {
 			$idus=$us['id_us'];
 			$ccus=$us['cc_us'];
 			$nmus=$us['nom_ap_us'];
@@ -26,8 +26,8 @@
 	function Nomtipos($dato,$serv)
 	{
 		$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-		$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-		while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+		$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+		while ($wtp=$sql_sacartipo->fetch_assoc()) {
 			$namwtp=$wtp['nam_tp'];
 		}
 		return $namwtp;
@@ -35,10 +35,10 @@
 	function NomBarr($dato,$serv)
 	{
 		$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-		$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-		$numbarrio=mysql_num_rows($sql_sacbarr);
+		$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+		$numbarrio=$sql_sacbarr->num_rows;
 		if ($numbarrio>0) {
-			while ($brw=mysql_fetch_array($sql_sacbarr)) {
+			while ($brw=$sql_sacbarr->fetch_assoc()) {
 				$nambarw=$brw['nam_barr'];
 			}
 		}
@@ -133,17 +133,17 @@
 			<article class="owl-carousel owl-theme owl-loaded">
 				<?php
 					$Ultmosdzimb="SELECT * from inmuebles where estd_inm<'3' order by cod_inm desc limit 12";
-					$sql_ulimb=mysql_query($Ultmosdzimb,$conexion) or die (mysql_error());
-					while ($ub=mysql_fetch_array($sql_ulimb)) {
+					$sql_ulimb=$conexion->query($Ultmosdzimb) or die (mysqli_error());
+					while ($ub=$sql_ulimb->fetch_assoc()) {
 						$idbUB=$ub['cod_inm'];
 						$tpbUB=$ub['tip_inm_id'];
 						$barUB=$ub['barr_id'];
 						$esUB=$ub['estd_inm'];
 						$primierimg="SELECT * from images_imb where ib_id=$idbUB order by id_img_ib asc limit 1";
-						$sql_primeruno=mysql_query($primierimg,$conexion) or die (mysql_error());
-						$numeruno=mysql_num_rows($sql_primeruno);
+						$sql_primeruno=$conexion->query($primierimg) or die (mysqli_error());
+						$numeruno=$sql_primeruno->num_rows;
 						if ($numeruno>0) {
-							while ($ob=mysql_fetch_array($sql_primeruno)) {
+							while ($ob=$sql_primeruno->fetch_assoc()) {
 								$gmibUB=$ob['id_img_ib'];
 								$gmrutUB=$ob['rut_ib'];
 							}
@@ -182,8 +182,8 @@
 				<ul class="grid cs-style-3">
 					<?php
 						$imRG="SELECT * from inmuebles where estd_inm<'3' order by cod_inm desc limit 20";
-						$sql_imgr=mysql_query($imRG,$conexion) or die (mysql_error());
-						while ($xor=mysql_fetch_array($sql_imgr)) {
+						$sql_imgr=$conexion->query($imRG) or die (mysqli_error());
+						while ($xor=$sql_imgr->fetch_assoc()) {
 							$idbxr=$xor['cod_inm'];
 							$tpbxr=$xor['tip_inm_id'];
 							$barxr=$xor['barr_id'];
@@ -192,10 +192,10 @@
 							$hbxr=$xor['ban_inm'];
 							$mbxr=$xor['prec_inm'];
 							$primerdos="SELECT * from images_imb where ib_id=$idbxr order by id_img_ib asc limit 1";
-							$sql_primerdos=mysql_query($primerdos,$conexion) or die (mysql_error());
-							$numerdos=mysql_num_rows($sql_primerdos);
+							$sql_primerdos=$conexion->query($primerdos) or die (mysqli_error());
+							$numerdos=$sql_primerdos->num_rows;
 							if ($numerdos>0) {
-								while ($ox=mysql_fetch_array($sql_primerdos)) {
+								while ($ox=$sql_primerdos->fetch_assoc()) {
 									$gmibxr=$ox['id_img_ib'];
 									$gmrutxr=$ox['rut_ib'];
 								}
@@ -225,15 +225,15 @@
 					<article class="owl-carousel owl-theme owl-loaded">
 						<?php
 							$ProyR="SELECT * from proyectos where estd_py='1' order by id_py desc limit 10";
-							$sql_pyR=mysql_query($ProyR,$conexion) or die (mysql_error());
-							while ($yyr=mysql_fetch_array($sql_pyR)) {
+							$sql_pyR=$conexion->query($ProyR) or die (mysqli_error());
+							while ($yyr=$sql_pyR->fetch_assoc()) {
 								$idy=$yyr['id_py'];
 								$nmy=$yyr['nam_py'];
 								$primertres="SELECT * from images_py where py_id=$idy order by id_img_py asc limit 1";
-								$sql_primertres=mysql_query($primertres,$conexion) or die (mysql_error());
-								$numtres=mysql_num_rows($sql_primertres);
+								$sql_primertres=$conexion->query($primertres) or die (mysqli_error());
+								$numtres=$sql_primertres->num_rows;
 								if ($numtres>0) {
-									while ($ggm=mysql_fetch_array($sql_primertres)) {
+									while ($ggm=$sql_primertres->fetch_assoc()) {
 										$idimgpy=$ggm['id_img_py'];
 										$rutpy=$ggm['rut_py'];
 									}
@@ -273,8 +273,8 @@
 							<option value="0">Seleccione</option>
 							<?php
 								$Tmnnt="SELECT * from muni_nt_s order by nam_nt asc";
-								$sql_busmn=mysql_query($Tmnnt,$conexion) or die (mysql_error());
-								while ($bumn=mysql_fetch_array($sql_busmn)) {
+								$sql_busmn=$conexion->query($Tmnnt) or die (mysqli_error());
+								while ($bumn=$sql_busmn->fetch_assoc()) {
 									$idbumn=$bumn['id_nt'];
 									$nmbumn=$bumn['nam_nt'];
 							?>
@@ -289,8 +289,8 @@
 							<option value="0">Seleccione</option>
 							<?php
 								$Tbrt="SELECT * from barrios order by nam_barr asc";
-								$sql_busbar=mysql_query($Tbrt,$conexion) or die (mysql_error());
-								while ($bubr=mysql_fetch_array($sql_busbar)) {
+								$sql_busbar=$conexion->query($Tbrt) or die (mysqli_error());
+								while ($bubr=$sql_busbar->fetch_assoc()) {
 									$idbubar=$bubr['id_barrio'];
 									$nmbubarr=$bubr['nam_barr'];
 							?>
@@ -304,8 +304,8 @@
 							<option value="0">Seleccione</option>
 							<?php
 								$Tdtp="SELECT * from tipo_inmueble order by nam_tp asc";
-								$sql_tdpd=mysql_query($Tdtp,$conexion) or die (mysql_error());
-								while ($butp=mysql_fetch_array($sql_tdpd)) {
+								$sql_tdpd=$conexion->query($Tdtp) or die (mysqli_error());
+								while ($butp=$sql_tdpd->fetch_assoc()) {
 									$idbutp=$butp['id_tp'];
 									$nmbutp=$butp['nam_tp'];
 							?>
@@ -341,9 +341,9 @@
 				<article id="destac">
 					<h2>Inmuebles Destacados</h2>
 					<?php
-						$destaimb="SELECT * from inmuebles where estd_inm<'3' order by destac_imb desc limit 5";
-						$sql_desim=mysql_query($destaimb,$conexion) or die (mysql_error());
-						while ($dEs=mysql_fetch_array($sql_desim)) {
+						$destaimb="SELECT * from inmuebles where estd_inm<'3' order by destac_imb desc limit 21";
+						$sql_desim=$conexion->query($destaimb) or die (mysqli_error());
+						while ($dEs=$sql_desim->fetch_assoc()) {
 							$idEb=$dEs['cod_inm'];
 							$tpEb=$dEs['tip_inm_id'];
 							$mnEb=$dEs['muni_id'];
@@ -353,10 +353,10 @@
 							$esEb=$dEs['estd_inm'];
 							$aaEb=$dEs['destac_imb'];
 							$prircinco="SELECT * from images_imb where ib_id=$idEb order by id_img_ib asc limit 1";
-							$sql_cinco=mysql_query($prircinco,$conexion) or die (mysql_error());
-							$numcinco=mysql_num_rows($sql_cinco);
+							$sql_cinco=$conexion->query($prircinco) or die (mysqli_error());
+							$numcinco=$sql_cinco->num_rows;
 							if ($numcinco>0) {
-								while ($cic=mysql_fetch_array($sql_cinco)) {
+								while ($cic=$sql_cinco->fetch_assoc()) {
 									$cicidgm=$cic['id_img_ib'];
 									$cicimgrut=$cic['rut_ib'];
 								}

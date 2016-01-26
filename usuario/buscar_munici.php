@@ -8,10 +8,10 @@
 	}
 	else{
 		$buscar="SELECT * from municipios where depart_id=$idDP order by nam_muni asc";
-		$sql_buscar=mysql_query($buscar,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_buscar);
+		$sql_buscar=$conexion->query($buscar) or die (mysqli_error());
+		$numero=$sql_buscar->num_rows;
 		if ($numero>0) {
-			while ($mnd=mysql_fetch_array($sql_buscar)) {
+			while ($mnd=$sql_buscar->fetch_assoc()) {
 				$idmd=$mnd['id_municipio'];
 				$nmmd=$mnd['nam_muni'];
 ?>

@@ -18,6 +18,7 @@ function nuevo_usuario () {
 	var usd=$("#telus").val();
 	var use=$("#movus").val();
 	var usf=$("#dirus").val();
+	var usg=$("#xttus").val();
 	if (usa=="") {
 		$("#txA").css(mal).text("Ingrese los nombres y apellidos");
 		return false;
@@ -25,7 +26,7 @@ function nuevo_usuario () {
 	else{
 		$("#txA").css(normal).text("");
 		$("#txA").prepend("<center><img src='../../../imagenes/loadingb.gif' alt='loading' /></center>");
-		$.post("new_users.php",{a:usa,b:usb,c:usc,d:usd,e:use,f:usf},resulusers);
+		$.post("new_users.php",{a:usa,b:usb,c:usc,d:usd,e:use,f:usf,g:usg},resulusers);
 		return false;
 	}
 }

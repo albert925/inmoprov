@@ -5,11 +5,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 		$cca=$_GET['ba'];//Ordernar
 		$ccb=$_GET['bb'];//tipo inmueble
 		$ccc=$_GET['bc'];//municipios
@@ -100,8 +101,8 @@
 		function Nomtipos($dato,$serv)
 		{
 			$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-			$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-			while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+			$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+			while ($wtp=$sql_sacartipo->fetch_assoc()) {
 				$namwtp=$wtp['nam_tp'];
 			}
 			return $namwtp;
@@ -109,10 +110,10 @@
 		function NomMunici($dato,$serv)
 		{
 			$sacarnommunic="SELECT * from muni_nt_s where id_nt='$dato'";
-			$sql_sacarmuni=mysql_query($sacarnommunic,$serv) or die (mysql_error());
-			$nummuni=mysql_num_rows($sql_sacarmuni);
+			$sql_sacarmuni=$serv->query($sacarnommunic) or die (mysqli_error());
+			$nummuni=$sql_sacarmuni->num_rows;
 			if ($nummuni>0) {
-				while ($wmn=mysql_fetch_array($sql_sacarmuni)) {
+				while ($wmn=$sql_sacarmuni->fetch_assoc()) {
 					$namwm=$wmn['nam_nt'];
 				}
 			}
@@ -124,10 +125,10 @@
 		function NomBarr($dato,$serv)
 		{
 			$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-			$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-			$numbarrio=mysql_num_rows($sql_sacbarr);
+			$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+			$numbarrio=$sql_sacbarr->num_rows;
 			if ($numbarrio>0) {
-				while ($brw=mysql_fetch_array($sql_sacbarr)) {
+				while ($brw=$sql_sacbarr->fetch_assoc()) {
 					$nambarw=$brw['nam_barr'];
 				}
 			}
@@ -139,8 +140,8 @@
 		function nompropietario($dato,$serv)
 		{
 			$sacarpropir="SELECT * from usuarios where id_us=$dato";
-			$sql_usu=mysql_query($sacarpropir,$serv) or die (mysql_error());
-			while ($Uus=mysql_fetch_array($sql_usu)) {
+			$sql_usu=$serv->query($sacarpropir) or die (mysqli_error());
+			while ($Uus=$sql_usu->fetch_assoc()) {
 				$nmsus=$Uus['nom_ap_us'];
 			}
 			return $nmsus;
@@ -204,8 +205,8 @@
 						<option value="0">Seleccione</option>
 						<?php
 							$Tous="SELECT * from usuarios order by id_us desc";
-							$sql_us=mysql_query($Tous,$conexion) or die (mysql_error());
-							while ($osus=mysql_fetch_array($sql_us)) {
+							$sql_us=$conexion->query($Tous) or die (mysqli_error());
+							while ($osus=$sql_us->fetch_assoc()) {
 								$idus=$osus['id_us'];
 								$nmus=$osus['nom_ap_us'];
 						?>
@@ -219,8 +220,8 @@
 						<option value="0">Seleccione</option>
 						<?php
 							$tdtp="SELECT * from tipo_inmueble order by nam_tp asc";
-							$sql_tdtp=mysql_query($tdtp,$conexion) or die (mysql_error());
-							while ($tpU=mysql_fetch_array($sql_tdtp)) {
+							$sql_tdtp=$conexion->query($tdtp) or die (mysqli_error());
+							while ($tpU=$sql_tdtp->fetch_assoc()) {
 								$idtpU=$tpU['id_tp'];
 								$nmtpU=$tpU['nam_tp'];
 						?>
@@ -234,8 +235,8 @@
 						<option value="0">Seleccione</option>
 						<?php
 							$Tmnnt="SELECT * from muni_nt_s order by nam_nt asc";
-							$sql_mnnt=mysql_query($Tmnnt,$conexion) or die (mysql_error());
-							while ($Umn=mysql_fetch_array($sql_mnnt)) {
+							$sql_mnnt=$conexion->query($Tmnnt) or die (mysqli_error());
+							while ($Umn=$sql_mnnt->fetch_assoc()) {
 								$idUmn=$Umn['id_nt'];
 								$nmUmn=$Umn['nam_nt'];
 						?>
@@ -250,8 +251,8 @@
 						<option value="0">Seleccione</option>
 						<?php
 							$Tdbarr="SELECT * from barrios order by nam_barr asc";
-							$sql_tdbar=mysql_query($Tdbarr,$conexion) or die (mysql_error());
-							while ($Ubarr=mysql_fetch_array($sql_tdbar)) {
+							$sql_tdbar=$conexion->query($Tdbarr) or die (mysqli_error());
+							while ($Ubarr=$sql_tdbar->fetch_assoc()) {
 								$idUbar=$Ubarr['id_barrio'];
 								$nmUbarr=$Ubarr['nam_barr'];
 						?>
@@ -384,8 +385,8 @@
 				<option value="0">Tipo de Inmueble</option>
 				<?php
 					$busTipos="SELECT * from tipo_inmueble order by nam_tp asc";
-					$sql_bustp=mysql_query($busTipos,$conexion) or die (mysql_error());
-					while ($Outp=mysql_fetch_array($sql_bustp)) {
+					$sql_bustp=$conexion->query($busTipos) or die (mysqli_error());
+					while ($Outp=$sql_bustp->fetch_assoc()) {
 						$idOutp=$Outp['id_tp'];
 						$nmOutp=$Outp['nam_tp'];
 						if ($idOutp==$ccb) {
@@ -404,8 +405,8 @@
 				<option value="0">Municipios</option>
 				<?php
 					$filmunis="SELECT * from muni_nt_s order by nam_nt asc";
-					$sql_filmuni=mysql_query($filmunis,$conexion) or die (mysql_error());
-					while ($filmn=mysql_fetch_array($sql_filmuni)) {
+					$sql_filmuni=$conexion->query($filmunis) or die (mysqli_error());
+					while ($filmn=$sql_filmuni->fetch_assoc()) {
 						$idflmn=$filmn['id_nt'];
 						$nmflmn=$filmn['nam_nt'];
 						if ($idflmn==$ccc) {
@@ -424,8 +425,8 @@
 				<option value="0">Barrios</option>
 				<?php
 					$flbar="SELECT * from barrios order by nam_barr asc";
-					$sql_flbar=mysql_query($flbar,$conexion) or die (mysql_error());
-					while ($fbr=mysql_fetch_array($sql_flbar)) {
+					$sql_flbar=$conexion->query($flbar) or die (mysqli_error());
+					while ($fbr=$sql_flbar->fetch_assoc()) {
 						$idfbar=$fbr['id_barrio'];
 						$nmfbar=$fbr['nam_barr'];
 						if ($idfbar==$ccd) {
@@ -459,12 +460,12 @@
 				}
 				$ssql="SELECT * from inmuebles where $rgbb $rgcc $rgdd $rgee $rgff $rggg $rghh 
 					order by $arrordenfil[$cca]";
-				$rs=mysql_query($ssql,$conexion) or die (mysql_error());
-				$num_total_registros= mysql_num_rows($rs);
+				$rs=$conexion->query($ssql) or die (mysqli_error());
+				$num_total_registros= $rs->num_rows;
 				$total_paginas= ceil($num_total_registros / $tamno_pagina);
 				$gsql="SELECT * from inmuebles where $rgbb $rgcc $rgdd $rgee $rgff $rggg $rghh 
 					order by $arrordenfil[$cca] limit $inicio, $tamno_pagina";
-				$impsql=mysql_query($gsql,$conexion) or die (mysql_error());
+				$impsql=$conexion->query($gsql) or die (mysqli_error());
 			?>
 			<table border="1">
 				<tr>
@@ -487,7 +488,7 @@
 					<td><b>Eliminar</b></td>
 				</tr>
 			<?php
-				while ($gh=mysql_fetch_array($impsql)) {
+				while ($gh=$impsql->fetch_assoc()) {
 					$idb=$gh['cod_inm'];
 					$usb=$gh['usuario_id'];
 					$tpb=$gh['tip_inm_id'];

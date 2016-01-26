@@ -5,11 +5,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -66,8 +67,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$Tous="SELECT * from usuarios order by id_us desc";
-						$sql_us=mysql_query($Tous,$conexion) or die (mysql_error());
-						while ($osus=mysql_fetch_array($sql_us)) {
+						$sql_us=$conexion->query($Tous) or die (mysqli_error());
+						while ($osus=$sql_us->fetch_assoc()) {
 							$idus=$osus['id_us'];
 							$nmus=$osus['nom_ap_us'];
 					?>

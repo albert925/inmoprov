@@ -4,14 +4,15 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
-		$a=$_POST['nampy'];
-		$b=$_POST['latpy'];
-		$c=$_POST['logpy'];
+		//num_rows
+		$a=segcon($conexion,$_POST['nampy']);
+		$b=segcon($conexion,$_POST['latpy']);
+		$c=segcon($conexion,$_POST['logpy']);
 		$d=$_POST['txpy'];
 		$hoy=date("Y-m-d");
 		if ($a=="") {
@@ -24,7 +25,7 @@
 		else{
 			$ingresar="INSERT into proyectos(nam_py,text_py,fec_py,estd_py,lat_py,log_py) 
 				values('$a','$d','$hoy','1','$b','$c')";
-			mysql_query($ingresar,$conexion) or die (mysql_error());
+			$conexion->query($ingresar) or die (mysqli_error());
 			echo "<script type='text/javascript'>";
 				echo "alert('Proyecto ingresado');";
 				echo "var pagina='images_proyecto.php';";

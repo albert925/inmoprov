@@ -4,8 +4,8 @@
 	$b=$_POST['xb'];//id imbueble
 	$c=$_POST['xc'];//destacad actual
 	$bus_numeros="SELECT * from inmuebles where cod_inm=$b";
-	$ensql=mysql_query($bus_numeros,$conexion) or die (mysql_error());
-	while ($n=mysql_fetch_array($ensql)) {
+	$ensql=$conexion->query($bus_numeros) or die (mysqli_error());
+	while ($n=$ensql->fetch_assoc()) {
 		$numA=intval($n['cant_uno']);
 		$numB=intval($n['cant_dos']);
 		$numC=intval($n['cant_tres']);
@@ -124,6 +124,6 @@
 			break;
 	}
 	$modifcar="UPDATE inmuebles set destac_imb='$tipo'$cc where cod_inm=$b";
-	mysql_query($modifcar,$conexion) or die (mysql_error());
+	$conexion->query($modifcar) or die (mysqli_error());
 	echo "2";
 ?>

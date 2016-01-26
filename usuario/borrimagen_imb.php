@@ -11,13 +11,13 @@
 	}
 	else{
 		$sacarrut="SELECT * from images_imb where id_img_ib=$idR";
-		$sql_rut=mysql_query($sacarrut,$conexion) or die (mysql_error());
-		while ($tr=mysql_fetch_array($sql_rut)) {
+		$sql_rut=$conexion->query($sacarrut) or die (mysqli_error());
+		while ($tr=$sql_rut->fetch_assoc()) {
 			$rutborr=$tr['rut_ib'];
 		}
 		unlink("../".$rutborr);
 		$borrar="DELETE from images_imb where id_img_ib=$idR";
-		mysql_query($borrar,$conexion) or die (mysql_error());
+		$conexion->query($borrar) or die (mysqli_error());
 		echo "<script type='text/javascript'>";
 			echo "alert('Imagen borrado');";
 			echo "var pagina='inmueble_images.php?ib=$idB';";

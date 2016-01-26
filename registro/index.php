@@ -3,8 +3,8 @@
 	function Nomtipos($dato,$serv)
 	{
 		$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-		$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-		while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+		$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+		while ($wtp=$sql_sacartipo->fetch_assoc()) {
 			$namwtp=$wtp['nam_tp'];
 		}
 		return $namwtp;
@@ -12,10 +12,10 @@
 	function NomBarr($dato,$serv)
 	{
 		$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-		$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-		$numbarrio=mysql_num_rows($sql_sacbarr);
+		$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+		$numbarrio=$sql_sacbarr->num_rows;
 		if ($numbarrio>0) {
-			while ($brw=mysql_fetch_array($sql_sacbarr)) {
+			while ($brw=$sql_sacbarr->fetch_assoc()) {
 				$nambarw=$brw['nam_barr'];
 			}
 		}
@@ -89,17 +89,17 @@
 			<article class="owl-carousel owl-theme owl-loaded">
 				<?php
 					$Ultmosdzimb="SELECT * from inmuebles where estd_inm<'3' order by cod_inm desc limit 12";
-					$sql_ulimb=mysql_query($Ultmosdzimb,$conexion) or die (mysql_error());
-					while ($ub=mysql_fetch_array($sql_ulimb)) {
+					$sql_ulimb=$conexion->query($Ultmosdzimb) or die (mysqli_error());
+					while ($ub=$sql_ulimb->fetch_assoc()) {
 						$idbUB=$ub['cod_inm'];
 						$tpbUB=$ub['tip_inm_id'];
 						$barUB=$ub['barr_id'];
 						$esUB=$ub['estd_inm'];
 						$primierimg="SELECT * from images_imb where ib_id=$idbUB order by id_img_ib asc limit 1";
-						$sql_primeruno=mysql_query($primierimg,$conexion) or die (mysql_error());
-						$numeruno=mysql_num_rows($sql_primeruno);
+						$sql_primeruno=$conexion->query($primierimg) or die (mysqli_error());
+						$numeruno=$sql_primeruno->num_rows;
 						if ($numeruno>0) {
-							while ($ob=mysql_fetch_array($sql_primeruno)) {
+							while ($ob=$sql_primeruno->fetch_assoc()) {
 								$gmibUB=$ob['id_img_ib'];
 								$gmrutUB=$ob['rut_ib'];
 							}

@@ -1,7 +1,7 @@
 <?php
 	include '../config.php';
-	$a=$_POST['a'];//usuario
-	$b=$_POST['b'];//contraseña
+	$a=inpseg($conexion,$_POST['a']);//usuario
+	$b=inpseg($conexion,$_POST['b']);//contraseña
 	$salt = 'sanae-pequena-nina-7-years$/';
 	if ($a=="" || $b=="") {
 		echo "1";
@@ -9,10 +9,10 @@
 	else{
 		$c = sha1(md5($salt.$b));
 		$existe="SELECT * from administrador where user_adm='$a' and pass_adm='$c'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
-			while ($ad=mysql_fetch_array($sql_existe)) {
+			while ($ad=$sql_existe->fetch_assoc()) {
 				$idad=$ad['id_adm'];
 			}
 			session_start();

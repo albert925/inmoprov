@@ -4,8 +4,8 @@
 	if (isset($_SESSION['us'])) {
 		$rcusus=$_SESSION['us'];
 		$datosusers="SELECT * from usuarios where id_us=$rcusus";
-		$sql_dtus=mysql_query($datosusers,$conexion) or die (mysql_error());
-		while ($us=mysql_fetch_array($sql_dtus)) {
+		$sql_dtus=$conexion->query($datosusers) or die (mysqli_error());
+		while ($us=$sql_dtus->fetch_assoc()) {
 			$idus=$us['id_us'];
 			$ccus=$us['cc_us'];
 			$nmus=$us['nom_ap_us'];
@@ -22,8 +22,8 @@
 		function Nomtipos($dato,$serv)
 		{
 			$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-			$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-			while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+			$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+			while ($wtp=$sql_sacartipo->fetch_assoc()) {
 				$namwtp=$wtp['nam_tp'];
 			}
 			return $namwtp;
@@ -31,10 +31,10 @@
 		function NomMunici($dato,$serv)
 		{
 			$sacarnommunic="SELECT * from muni_nt_s where id_nt='$dato'";
-			$sql_sacarmuni=mysql_query($sacarnommunic,$serv) or die (mysql_error());
-			$nummuni=mysql_num_rows($sql_sacarmuni);
+			$sql_sacarmuni=$serv->query($sacarnommunic) or die (mysqli_error());
+			$nummuni=$sql_sacarmuni->num_rows;
 			if ($nummuni>0) {
-				while ($wmn=mysql_fetch_array($sql_sacarmuni)) {
+				while ($wmn=$sql_sacarmuni->fetch_assoc()) {
 					$namwm=$wmn['nam_nt'];
 				}
 			}
@@ -46,10 +46,10 @@
 		function NomBarr($dato,$serv)
 		{
 			$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-			$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-			$numbarrio=mysql_num_rows($sql_sacbarr);
+			$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+			$numbarrio=$sql_sacbarr->num_rows;
 			if ($numbarrio>0) {
-				while ($brw=mysql_fetch_array($sql_sacbarr)) {
+				while ($brw=$sql_sacbarr->fetch_assoc()) {
 					$nambarw=$brw['nam_barr'];
 				}
 			}
@@ -70,8 +70,8 @@
 		}
 		else{
 			$datos="SELECT * from inmuebles where cod_inm=$idR";
-			$sql_datos=mysql_query($datos,$conexion) or die (mysql_error());
-			while ($dt=mysql_fetch_array($sql_datos)) {
+			$sql_datos=$conexion->query($datos) or die (mysqli_error());
+			while ($dt=$sql_datos->fetch_assoc()) {
 				$usb=$dt['usuario_id'];
 				$tpb=$dt['tip_inm_id'];
 				$ab=$dt['muni_id'];
@@ -189,8 +189,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$tdtp="SELECT * from tipo_inmueble order by nam_tp asc";
-						$sql_tdtp=mysql_query($tdtp,$conexion) or die (mysql_error());
-						while ($tpU=mysql_fetch_array($sql_tdtp)) {
+						$sql_tdtp=$conexion->query($tdtp) or die (mysqli_error());
+						while ($tpU=$sql_tdtp->fetch_assoc()) {
 							$idtpU=$tpU['id_tp'];
 							$nmtpU=$tpU['nam_tp'];
 							if ($idtpU==$tpb) {
@@ -210,8 +210,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$Tmnnt="SELECT * from muni_nt_s order by nam_nt asc";
-						$sql_mnnt=mysql_query($Tmnnt,$conexion) or die (mysql_error());
-						while ($Umn=mysql_fetch_array($sql_mnnt)) {
+						$sql_mnnt=$conexion->query() or die (mysqli_error());
+						while ($Umn=$sql_mnnt->fetch_assoc()) {
 							$idUmn=$Umn['id_nt'];
 							$nmUmn=$Umn['nam_nt'];
 							if ($idUmn==$ab) {
@@ -232,8 +232,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$Tdbarr="SELECT * from barrios order by nam_barr asc";
-						$sql_tdbar=mysql_query($Tdbarr,$conexion) or die (mysql_error());
-						while ($Ubarr=mysql_fetch_array($sql_tdbar)) {
+						$sql_tdbar=$conexion->query($Tdbarr) or die (mysqli_error());
+						while ($Ubarr=$sql_tdbar->fetch_assoc()) {
 							$idUbar=$Ubarr['id_barrio'];
 							$nmUbarr=$Ubarr['nam_barr'];
 							if ($idUbar==$bb) {

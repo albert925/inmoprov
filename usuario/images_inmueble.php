@@ -4,8 +4,8 @@
 	if (isset($_SESSION['us'])) {
 		$rcusus=$_SESSION['us'];
 		$datosusers="SELECT * from usuarios where id_us=$rcusus";
-		$sql_dtus=mysql_query($datosusers,$conexion) or die (mysql_error());
-		while ($us=mysql_fetch_array($sql_dtus)) {
+		$sql_dtus=$conexion->query($datosusers) or die (mysqli_error());
+		while ($us=$sql_dtus->fetch_assoc()) {
 			$idus=$us['id_us'];
 			$ccus=$us['cc_us'];
 			$nmus=$us['nom_ap_us'];
@@ -22,8 +22,8 @@
 		function Nomtipos($dato,$serv)
 		{
 			$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-			$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-			while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+			$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+			while ($wtp=$sql_sacartipo->fetch_assoc()) {
 				$namwtp=$wtp['nam_tp'];
 			}
 			return $namwtp;
@@ -31,10 +31,10 @@
 		function NomMunici($dato,$serv)
 		{
 			$sacarnommunic="SELECT * from muni_nt_s where id_nt='$dato'";
-			$sql_sacarmuni=mysql_query($sacarnommunic,$serv) or die (mysql_error());
-			$nummuni=mysql_num_rows($sql_sacarmuni);
+			$sql_sacarmuni=$serv->query($sacarnommunic) or die (mysqli_error());
+			$nummuni=$sql_sacarmuni->num_rows;
 			if ($nummuni>0) {
-				while ($wmn=mysql_fetch_array($sql_sacarmuni)) {
+				while ($wmn=$sql_sacarmuni->fetch_assoc()) {
 					$namwm=$wmn['nam_nt'];
 				}
 			}
@@ -46,10 +46,10 @@
 		function NomBarr($dato,$serv)
 		{
 			$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-			$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-			$numbarrio=mysql_num_rows($sql_sacbarr);
+			$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+			$numbarrio=$sql_sacbarr->num_rows;
 			if ($numbarrio>0) {
-				while ($brw=mysql_fetch_array($sql_sacbarr)) {
+				while ($brw=$sql_sacbarr->fetch_assoc()) {
 					$nambarw=$brw['nam_barr'];
 				}
 			}
@@ -142,8 +142,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$tdimb="SELECT * from inmuebles where usuario_id=$idus order by cod_inm desc";
-						$sql_imb=mysql_query($tdimb,$conexion) or die (mysql_error());
-						while ($mb=mysql_fetch_array($sql_imb)) {
+						$sql_imb=$conexion->query($tdimb) or die (mysqli_error());
+						while ($mb=$sql_imb->fetch_assoc()) {
 							$idmb=$mb['cod_inm'];
 					?>
 					<option value="<?php echo $idmb ?>"><?php echo "$idmb"; ?></option>

@@ -8,10 +8,10 @@
 	}
 	else{
 		$buscar="SELECT * from barrios where munins_id=$idmuni order by nam_barr asc";
-		$sql_buscar=mysql_query($buscar,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_buscar);
+		$sql_buscar=$conexion->query($buscar) or die (mysqli_error());
+		$numero=$sql_buscar->num_rows;
 		if ($numero>0) {
-			while ($br=mysql_fetch_array($sql_buscar)) {
+			while ($br=$sql_buscar->fetch_assoc()) {
 				$idObr=$br['id_barrio'];
 				$nmObr=$br['nam_barr'];
 ?>

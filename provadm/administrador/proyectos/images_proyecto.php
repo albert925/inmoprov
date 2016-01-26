@@ -4,11 +4,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -65,8 +66,8 @@
 					<option value="0">Selecione</option>
 					<?php
 						$Tpy="SELECT * from proyectos order by id_py desc";
-						$sql_py=mysql_query($Tpy,$conexion) or die (mysql_error());
-						while ($yp=mysql_fetch_array($sql_py)) {
+						$sql_py=$conexion->query($Tpy) or die (mysqli_error());
+						while ($yp=$sql_py->fetch_assoc()) {
 							$idpy=$yp['id_py'];
 							$nmpy=$yp['nam_py'];
 					?>

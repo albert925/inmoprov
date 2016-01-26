@@ -7,14 +7,14 @@
 	}
 	else{
 		$existe="SELECT * from administrador where user_adm='$a'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
 			echo "2";
 		}
 		else{
 			$modificar="UPDATE administrador set user_adm='$a' where id_adm=$idR";
-			mysql_query($modificar,$conexion) or die (mysql_error());
+			$conexion->query($modificar) or die (mysqli_error());
 			echo "3";
 		}
 	}

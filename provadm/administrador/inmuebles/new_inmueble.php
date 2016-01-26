@@ -5,11 +5,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 		$idus=$_POST['prus'];
 		$idtp=$_POST['tpib'];
 		$ab=$_POST['mnib'];
@@ -67,7 +68,7 @@
 				'$vb','$wb',
 				'$xb','$hoy','$usad',
 				'0','0','0','0','0','0')";
-			mysql_query($ingresar,$conexion) or die (mysql_error());
+			$conexion->query($ingresar) or die (mysqli_error());
 			echo "<script type='text/javascript'>";
 				echo "alert('Inmueble ingresado');";
 				echo "var pagina='images_inmueble.php';";

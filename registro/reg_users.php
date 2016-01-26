@@ -1,9 +1,9 @@
 <?php
 	include '../config.php';
-	$a=$_POST['a'];//nombres
-	$b=$_POST['b'];//apellidos
-	$c=$_POST['c'];//correo
-	$d=$_POST['d'];//telefono
+	$a=segcon($conexion,$_POST['a']);//nombres
+	$b=segcon($conexion,$_POST['b']);//apellidos
+	$c=segcon($conexion,$_POST['c']);//correo
+	$d=segcon($conexion,$_POST['d']);//telefono
 	$nombreComp=$a." ".$b;
 	$hoy=date("Y-m-d");
 	function rand_code($chars,$long)
@@ -20,8 +20,8 @@
 	}
 	else{
 		$existe="SELECT * from usuarios where cor_us='$c'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
 			echo "2|0";
 		}
@@ -33,10 +33,10 @@
 			$e=rand_code($caracteres,$longib);
 			$ingresar="INSERT into usuarios(nom_ap_us,cor_us,mov_us,pass_us,tp_us,estd_us,cod_reg_us,fecr_us) 
 				values('$nombreComp','$c','$d','$e','1','2','$codigoal','$hoy')";
-			mysql_query($ingresar,$conexion) or die (mysql_error());
+			$conexion->query($ingresar) or die (mysqli_error());
 			$tomar_id="SELECT id_us from usuarios where cor_us='$c'";
-			$sql_tomar=mysql_query($tomar_id,$conexion) or die (mysql_error());
-			while ($fg=mysql_fetch_array($sql_tomar)) {
+			$sql_tomar=$conexion->query($tomar_id) or die (mysqli_error());
+			while ($fg=$sql_tomar->fetch_assoc()) {
 				$idus=$fg['id_us'];
 			}
 			include '../miler/class.phpmailer.php';

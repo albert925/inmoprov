@@ -46,7 +46,7 @@
 			estd_inm='$tb',fe_inm='$ub',
 			lat_inm='$vb',lon_inm='$wb',
 			descip_inm='$xb' where cod_inm=$idR";
-		mysql_query($modificar,$conexion) or die (mysql_error());
+		$conexion->query($modificar) or die (mysqli_error());
 		echo "<script type='text/javascript'>";
 			echo "alert('Inmueble modificado');";
 			echo "var pagina='modif_imb.php?ib=$idR';";

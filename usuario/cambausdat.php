@@ -13,7 +13,7 @@
 	else{
 		$modificar="UPDATE usuarios set nom_ap_us='$a',tel_us='$c',mov_us='$d',depart_id=$e,
 			muni_id=$f,direc_us='$g' where id_us=$idR";
-		mysql_query($modificar,$conexion) or die (mysql_error());
+		$conexion->query($modificar) or die (mysqli_error());
 		echo "2";
 	}
 ?>

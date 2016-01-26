@@ -7,14 +7,14 @@
 	}
 	else{
 		$existe="SELECT * from usuarios where cc_us='$ccR'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
 			echo "2";
 		}
 		else{
 			$Modificar="UPDATE usuarios set cc_us='$ccR' where id_us=$idR";
-			mysql_query($Modificar,$conexion) or die (mysql_error());
+			$conexion->query($Modificar) or die (mysqli_error());
 			echo "3";
 		}
 	}

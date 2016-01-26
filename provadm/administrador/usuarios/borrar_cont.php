@@ -4,11 +4,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 		$idR=$_GET['br'];
 		$idus=$_GET['us'];
 		if ($idR=="" || $idus=="") {
@@ -20,7 +21,7 @@
 		}
 		else{
 			$borrarcont="DELETE from otros_cont where id_cont=$idR";
-			mysql_query($borrarcont,$conexion) or die (mysql_error());
+			$conexion->query($borrarcont) or die (mysqli_error());
 			echo "<script type='text/javascript'>";
 				echo "alert('Contacto borrado');";
 				echo "var pagina='users_contacto.php?us=$idus';";

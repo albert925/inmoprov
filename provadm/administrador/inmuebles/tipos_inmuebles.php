@@ -5,21 +5,22 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 		$mH=date("m");
 		$yH=date("Y");
 		$arrestado=["Seleccione","Activado","Desactivado"];
 		function nomDepart($dato,$serv)
 		{
 			$nomdtp="SELECT * from departamentos where id_depart='$dato'";
-			$sql_depart=mysql_query($nomdtp,$serv);
-			$numdepar=mysql_num_rows($sql_depart);
+			$sql_depart=$serv->query($nomdtp) or die (mysqli_error());
+			$numdepar=$sql_depart->num_rows;
 			if ($numdepar>0) {
-				while ($dpt=mysql_fetch_array($sql_depart)) {
+				while ($dpt=$sql_depart->fetch_assoc()) {
 					$nmdp=$dpt['nam_depart'];
 				}
 			}
@@ -31,10 +32,10 @@
 		function nomMuni($dato,$serv)
 		{
 			$sqlmn="SELECT * from municipios where id_municipio='$dato'";
-			$sql_rtmn=mysql_query($sqlmn,$serv) or die (mysql_error());
-			$nummuni=mysql_num_rows($sql_rtmn);
+			$sql_rtmn=$serv->query($sqlmn) or die (mysqli_error());
+			$nummuni=$sql_rtmn->num_rows;
 			if ($nummuni>0) {
-				while ($mn=mysql_fetch_array($sql_rtmn)) {
+				while ($mn=$sql_rtmn->fetch_assoc()) {
 					$nmmnm=$mn['nam_muni'];
 				}
 			}
@@ -115,12 +116,12 @@
 					$inicio= ($pagina - 1)*$tamno_pagina;
 				}
 				$ssql="SELECT * from tipo_inmueble order by nam_tp asc";
-				$rs=mysql_query($ssql,$conexion) or die (mysql_error());
-				$num_total_registros= mysql_num_rows($rs);
+				$rs=$conexion->query($ssql) or die (mysqli_error());
+				$num_total_registros= $rs->num_rows;
 				$total_paginas= ceil($num_total_registros / $tamno_pagina);
 				$gsql="SELECT * from tipo_inmueble order by nam_tp asc limit $inicio, $tamno_pagina";
-				$impsql=mysql_query($gsql,$conexion) or die (mysql_error());
-				while ($gh=mysql_fetch_array($impsql)) {
+				$impsql=$conexion->query($gsql) or die (mysqli_error());
+				while ($gh=$impsql->fetch_assoc()) {
 					$idtp=$gh['id_tp'];
 					$nmtp=$gh['nam_tp'];
 			?>

@@ -5,11 +5,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 		$arrestado=["Seleccione","Arrendar","Venta","Arrendado","Vendido"];
 		$idR=$_GET['ib'];
 		if ($idR=="") {
@@ -21,8 +22,8 @@
 		}
 		else{
 			$datos="SELECT * from inmuebles where cod_inm=$idR";
-			$sql_datos=mysql_query($datos,$conexion) or die (mysql_error());
-			while ($dt=mysql_fetch_array($sql_datos)) {
+			$sql_datos=$conexion->query($datos) or die (mysqli_error());
+			while ($dt=$sql_datos->fetch_assoc()) {
 				$usb=$dt['usuario_id'];
 				$tpb=$dt['tip_inm_id'];
 				$ab=$dt['muni_id'];
@@ -112,8 +113,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$Tous="SELECT * from usuarios order by id_us desc";
-						$sql_us=mysql_query($Tous,$conexion) or die (mysql_error());
-						while ($osus=mysql_fetch_array($sql_us)) {
+						$sql_us=$conexion->query($Tous) or die (mysqli_error());
+						while ($osus=$sql_us->fetch_assoc()) {
 							$idus=$osus['id_us'];
 							$nmus=$osus['nom_ap_us'];
 							if ($idus==$usb) {
@@ -133,8 +134,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$tdtp="SELECT * from tipo_inmueble order by nam_tp asc";
-						$sql_tdtp=mysql_query($tdtp,$conexion) or die (mysql_error());
-						while ($tpU=mysql_fetch_array($sql_tdtp)) {
+						$sql_tdtp=$conexion->query($tdtp) or die (mysqli_error());
+						while ($tpU=$sql_tdtp->fetch_assoc()) {
 							$idtpU=$tpU['id_tp'];
 							$nmtpU=$tpU['nam_tp'];
 							if ($idtpU==$tpb) {
@@ -154,8 +155,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$Tmnnt="SELECT * from muni_nt_s order by nam_nt asc";
-						$sql_mnnt=mysql_query($Tmnnt,$conexion) or die (mysql_error());
-						while ($Umn=mysql_fetch_array($sql_mnnt)) {
+						$sql_mnnt=$conexion->query($Tmnnt) or die (mysqli_error());
+						while ($Umn=$sql_mnnt->fetch_assoc()) {
 							$idUmn=$Umn['id_nt'];
 							$nmUmn=$Umn['nam_nt'];
 							if ($idUmn==$ab) {
@@ -176,8 +177,8 @@
 					<option value="0">Seleccione</option>
 					<?php
 						$Tdbarr="SELECT * from barrios order by nam_barr asc";
-						$sql_tdbar=mysql_query($Tdbarr,$conexion) or die (mysql_error());
-						while ($Ubarr=mysql_fetch_array($sql_tdbar)) {
+						$sql_tdbar=$conexion->query($Tdbarr) or die (mysqli_error());
+						while ($Ubarr=$sql_tdbar->fetch_assoc()) {
 							$idUbar=$Ubarr['id_barrio'];
 							$nmUbarr=$Ubarr['nam_barr'];
 							if ($idUbar==$bb) {

@@ -9,9 +9,9 @@
 <a href="#"><?php echo "$a"; ?></a>
 <?php
 		$buscar="SELECT * from usuarios where nom_ap_us like '%$a%'";
-		$sql_buscar=mysql_query($buscar,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_buscar);
-		while ($bus=mysql_fetch_array($sql_buscar)) {
+		$sql_buscar=$conexion->query($buscar) or die (mysqli_error());
+		$numero=$sql_buscar->num_rows;
+		while ($bus=$sql_buscar->fetch_assoc()) {
 			$idbs=$bus['id_us'];
 			$nmbs=$bus['nom_ap_us'];
 ?>

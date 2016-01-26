@@ -4,15 +4,16 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
-		$idR=$_POST['pyid'];
-		$a=$_POST['nampy'];
-		$b=$_POST['latpy'];
-		$c=$_POST['logpy'];
+		//num_rows
+		$idR=segcon($conexion,$_POST['pyid']);
+		$a=segcon($conexion,$_POST['nampy']);
+		$b=segcon($conexion,$_POST['latpy']);
+		$c=segcon($conexion,$_POST['logpy']);
 		$d=$_POST['txpy'];
 		$hoy=date("Y-m-d");
 		if ($idR=="" || $a=="") {
@@ -25,7 +26,7 @@
 		else{
 			$modificar="UPDATE proyectos set nam_py='$a',text_py='$d',lat_py='$b',
 				log_py='$c' where id_py=$idR";
-			mysql_query($modificar,$conexion) or die (mysql_error());
+			$conexion->query($modificar) or die (mysqli_error());
 			echo "<script type='text/javascript'>";
 				echo "alert('Proyecto modificado');";
 				echo "var pagina='mopdif_py.php?py=$idR';";

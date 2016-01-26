@@ -4,11 +4,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 		$idR=$_GET['ib'];
 		if ($idR=="") {
 			echo "<script type='text/javascript'>";
@@ -19,8 +20,8 @@
 		}
 		else{
 			$datos="SELECT * from inmuebles where cod_inm=$idR";
-			$sql_datos=mysql_query($datos,$conexion) or die (mysql_error());
-			while ($dt=mysql_fetch_array($sql_datos)) {
+			$sql_datos=$conexion->query($datos) or die (mysqli_error());
+			while ($dt=$sql_datos->fetch_assoc()) {
 				$usb=$dt['usuario_id'];
 				$tpb=$dt['tip_inm_id'];
 				$ab=$dt['muni_id'];
@@ -122,12 +123,12 @@
 					$inicio= ($pagina - 1)*$tamno_pagina;
 				}
 				$ssql="SELECT * from images_imb where ib_id=$idR order by id_img_ib asc";
-				$rs=mysql_query($ssql,$conexion) or die (mysql_error());
-				$num_total_registros= mysql_num_rows($rs);
+				$rs=$conexion->query($ssql) or die (mysqli_error());
+				$num_total_registros= $rs->num_rows;
 				$total_paginas= ceil($num_total_registros / $tamno_pagina);
 				$gsql="SELECT * from images_imb where ib_id=$idR order by id_img_ib asc limit $inicio, $tamno_pagina";
-				$impsql=mysql_query($gsql,$conexion) or die (mysql_error());
-				while ($gh=mysql_fetch_array($impsql)) {
+				$impsql=$conexion->query($gsql) or die (mysqli_error());
+				while ($gh=$impsql->fetch_assoc()) {
 					$idgmib=$gh['id_img_ib'];
 					$rtgmib=$gh['rut_ib'];
 			?>

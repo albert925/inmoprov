@@ -7,11 +7,11 @@
 	}
 	else{
 		$existe="SELECT * from usuarios where id_us=$idR and cod_reg_us='$codiR'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
 			$modificar="UPDATE usuarios set estd_us='1',cod_reg_us='000' where id_us=$idR";
-			mysql_query($modificar,$conexion) or die (mysql_error());
+			$conexion->query($modificar) or die (mysqli_error());
 			$der=2;
 		}
 		else{

@@ -28,8 +28,8 @@
 	$xb=$_POST['txib'];
 	$hoy=date("Y-m-d");
 	$sacarnomb="SELECT * from usuarios where id_us=$idus";
-	$sql_usus=mysql_query($sacarnomb,$conexion) or die (mysql_error());
-	while ($cu=mysql_fetch_array($sql_usus)) {
+	$sql_usus=$conexion->query($sacarnomb) or die (mysqli_error());
+	while ($cu=$sql_usus->fetch_assoc()) {
 		$nomus=$cu['nom_ap_us'];
 	}
 	if ($idus=="0" || $idus=="" || $idtp=="0" || $idtp=="" || $ab=="0" || $ab=="" || $bb=="0" || $bb=="") {
@@ -62,7 +62,7 @@
 			'$vb','$wb',
 			'$xb','$hoy','$nomus',
 			'0','0','0','0','0','0')";
-		mysql_query($ingresar,$conexion) or die (mysql_error());
+		$conexion->query($ingresar) or die (mysqli_error());
 		echo "<script type='text/javascript'>";
 			echo "alert('Inmueble ingresado');";
 			echo "var pagina='images_inmueble.php';";

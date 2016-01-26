@@ -22,8 +22,8 @@
 		function Nomtipos($dato,$serv)
 		{
 			$sacarnombtp="SELECT * from tipo_inmueble where id_tp=$dato";
-			$sql_sacartipo=mysql_query($sacarnombtp,$serv)  or die (mysql_error());
-			while ($wtp=mysql_fetch_array($sql_sacartipo)) {
+			$sql_sacartipo=$serv->query($sacarnombtp)  or die (mysqli_error());
+			while ($wtp=$sql_sacartipo->fetch_assoc()) {
 				$namwtp=$wtp['nam_tp'];
 			}
 			return $namwtp;
@@ -31,10 +31,10 @@
 		function NomMunici($dato,$serv)
 		{
 			$sacarnommunic="SELECT * from muni_nt_s where id_nt='$dato'";
-			$sql_sacarmuni=mysql_query($sacarnommunic,$serv) or die (mysql_error());
-			$nummuni=mysql_num_rows($sql_sacarmuni);
+			$sql_sacarmuni=$serv->query($sacarnommunic) or die (mysqli_error());
+			$nummuni=$sql_sacarmuni->num_rows;
 			if ($nummuni>0) {
-				while ($wmn=mysql_fetch_array($sql_sacarmuni)) {
+				while ($wmn=$sql_sacarmuni->fetch_assoc()) {
 					$namwm=$wmn['nam_nt'];
 				}
 			}
@@ -46,10 +46,10 @@
 		function NomBarr($dato,$serv)
 		{
 			$sacarnombarr="SELECT * from barrios where id_barrio='$dato'";
-			$sql_sacbarr=mysql_query($sacarnombarr,$serv) or die (mysql_error());
-			$numbarrio=mysql_num_rows($sql_sacbarr);
+			$sql_sacbarr=$serv->query($sacarnombarr) or die (mysqli_error());
+			$numbarrio=$sql_sacbarr->num_rows;
 			if ($numbarrio>0) {
-				while ($brw=mysql_fetch_array($sql_sacbarr)) {
+				while ($brw=$sql_sacbarr->fetch_assoc()) {
 					$nambarw=$brw['nam_barr'];
 				}
 			}
@@ -70,8 +70,8 @@
 		}
 		else{
 			$obidbult="SELECT * from inmuebles where cod_inm=$idR";
-			$sqlultimib=mysql_query($obidbult,$conexion) or die (mysql_error());
-			while ($ulb=mysql_fetch_array($sqlultimib)) {
+			$sqlultimib=$conexion->query($obidbult) or die (mysqli_error());
+			while ($ulb=$sqlultimib->fetch_assoc()) {
 				$idb=$ulb['cod_inm'];
 				$tpb=$ulb['tip_inm_id'];
 			}
@@ -171,12 +171,12 @@
 					$inicio= ($pagina - 1)*$tamno_pagina;
 				}
 				$ssql="SELECT * from images_imb where ib_id=$idR order by id_img_ib asc";
-				$rs=mysql_query($ssql,$conexion) or die (mysql_error());
-				$num_total_registros= mysql_num_rows($rs);
+				$rs=$conexion->query($ssql) or die (mysqli_error());
+				$num_total_registros= $rs->num_rows;
 				$total_paginas= ceil($num_total_registros / $tamno_pagina);
 				$gsql="SELECT * from images_imb where ib_id=$idR order by id_img_ib asc limit $inicio, $tamno_pagina";
-				$impsql=mysql_query($gsql,$conexion) or die (mysql_error());
-				while ($gh=mysql_fetch_array($impsql)) {
+				$impsql=$conexion->query($gsql) or die (mysqli_error());
+				while ($gh=$impsql->fetch_assoc()) {
 					$idgmib=$gh['id_img_ib'];
 					$rtgmib=$gh['rut_ib'];
 			?>

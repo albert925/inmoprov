@@ -1,20 +1,20 @@
 <?php
 	include '../config.php';
-	$a=$_POST['a'];//usuario
-	$b=$_POST['b'];//contraseña
+	$a=inpseg($conexion,$_POST['a']);//usuario
+	$b=inpseg($conexion,$_POST['b']);//contraseña
 	if ($a=="" || $b=="") {
 		echo "1";
 	}
 	else{
 		$existe="SELECT * from usuarios where cor_us='$a' and pass_us='$b'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
 			$activado="SELECT * from usuarios where cor_us='$a' and estd_us='1'";
-			$sql_act=mysql_query($activado,$conexion) or die (mysql_error());
-			$numacti=mysql_num_rows($sql_act);
+			$sql_act=$conexion->query($activado) or die (mysqli_error());
+			$numacti=$sql_act->num_rows;
 			if ($numacti>0) {
-				while ($us=mysql_fetch_array($sql_existe)) {
+				while ($us=$sql_existe->fetch_assoc()) {
 					$idus=$us['id_us'];
 				}
 				session_start();

@@ -4,11 +4,12 @@
 	if (isset($_SESSION['adm'])) {
 		$idradd=$_SESSION['adm'];
 		$datadm="SELECT * from administrador where id_adm=$idradd";
-		$sql_adm=mysql_query($datadm,$conexion) or die (mysql_error());
-		while ($ad=mysql_fetch_array($sql_adm)) {
+		$sql_adm=$conexion->query($datadm) or die (mysqli_error());
+		while ($ad=$sql_adm->fetch_assoc()) {
 			$usad=$ad['user_adm'];
 			$tpad=$ad['tp_adm'];
 		}
+		//num_rows
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -66,8 +67,8 @@
 						<option value="0">Selecione</option>
 						<?php
 							$tMn="SELECT * from muni_nt_s order by nam_nt asc";
-							$sql_mnnt=mysql_query($tMn,$conexion) or die (mysql_error());
-							while ($mn=mysql_fetch_array($sql_mnnt)) {
+							$sql_mnnt=$conexion->query($tMn) or die (mysqli_error());
+							while ($mn=$sql_mnnt->fetch_assoc()) {
 								$idnt=$mn['id_nt'];
 								$nant=$mn['nam_nt'];
 						?>
@@ -96,12 +97,12 @@
 					$inicio= ($pagina - 1)*$tamno_pagina;
 				}
 				$ssql="SELECT * from barrios order by nam_barr asc";
-				$rs=mysql_query($ssql,$conexion) or die (mysql_error());
-				$num_total_registros= mysql_num_rows($rs);
+				$rs=$conexion->query($ssql) or die (mysqli_error());
+				$num_total_registros= $rs->num_rows;
 				$total_paginas= ceil($num_total_registros / $tamno_pagina);
 				$gsql="SELECT * from barrios order by nam_barr asc limit $inicio, $tamno_pagina";
-				$impsql=mysql_query($gsql,$conexion) or die (mysql_error());
-				while ($gh=mysql_fetch_array($impsql)) {
+				$impsql=$conexion->query($gsql) or die (mysqli_error());
+				while ($gh=$impsql->fetch_assoc()) {
 					$idbr=$gh['id_barrio'];
 					$idbrmn=$gh['munins_id'];
 					$nambr=$gh['nam_barr'];
@@ -111,7 +112,7 @@
 				<select id="delmnFf_<?php echo $idbr ?>">
 					<?php
 						$dosmuni="SELECT * from muni_nt_s order by nam_nt asc";
-						$sql_diosmn=mysql_query($dosmuni,$conexion) or die (mysql_error());
+						$sql_diosmn=mysql_query($dosmuni,$conexion) or die (mysqli_error());
 						while ($Umn=mysql_fetch_array($sql_diosmn)) {
 							$idUmn=$Umn['id_nt'];
 							$nmUmn=$Umn['nam_nt'];

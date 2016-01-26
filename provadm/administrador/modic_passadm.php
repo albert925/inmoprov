@@ -14,11 +14,11 @@
 	}
 	else{
 		$existe="SELECT * from administrador where id_adm=$idR and pass_adm='".passcifr($conact)."'";
-		$sql_existe=mysql_query($existe,$conexion) or die (mysql_error());
-		$numero=mysql_num_rows($sql_existe);
+		$sql_existe=$conexion->query($existe) or die (mysqli_error());
+		$numero=$sql_existe->num_rows;
 		if ($numero>0) {
 			$modificar="UPDATE administrador set pass_adm='".passcifr($connew)."' where id_adm=$idR";
-			mysql_query($modificar,$conexion) or die (mysql_error());
+			$conexion->query($modificar) or die (mysqli_error());
 			echo "3";
 		}
 		else{

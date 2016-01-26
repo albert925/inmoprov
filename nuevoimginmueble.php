@@ -69,7 +69,7 @@
 									imagedestroy($imgm);
 									imagedestroy($marcadeagua);
 									$ddf="INSERT into images_imb(ib_id,rut_ib) values($idR,'$ruta')";
-									mysql_query($ddf,$conexion) or die (mysql_error());
+									$conexion->query($ddf) or die (mysqli_error());
 									echo "5";
 								}
 								else{

@@ -1,11 +1,12 @@
 <?php
 	include '../../../config.php';
-	$a=$_POST['a'];//nombres apellidos
-	$b=$_POST['b'];//cedula
-	$c=$_POST['c'];//correo
-	$d=$_POST['d'];//telefono
-	$e=$_POST['e'];//celular
+	$a=segcon($conexion,$_POST['a']);//nombres apellidos
+	$b=segcon($conexion,$_POST['b']);//cedula
+	$c=segcon($conexion,$_POST['c']);//correo
+	$d=segcon($conexion,$_POST['d']);//telefono
+	$e=segcon($conexion,$_POST['e']);//celular
 	$f=$_POST['f'];//direccion
+	$g=segcon($conexion,$_POST['g']);//mas numeros
 	$hoy=date("Y-m-d");
 	function rand_code($chars,$long)
 	{
@@ -22,30 +23,30 @@
 	else{
 		if ($c=="") {
 			if ($b=="") {
-				$ingresar="INSERT into usuarios(nom_ap_us,tel_us,mov_us,direc_us,estd_us,fecr_us) 
-					values('$a','$d','$e','$f','1','$hoy')";
-				mysql_query($ingresar,$conexion) or die (mysql_error());
+				$ingresar="INSERT into usuarios(nom_ap_us,tel_us,mov_us,direc_us,estd_us,fecr_us,teltwo) 
+					values('$a','$d','$e','$f','1','$hoy','$g')";
+				$conexion->query($ingresar) or die (mysqli_error());
 				echo "3";
 			}
 			else{
 				$ccextis="SELECT * from usuarios where cc_us='$b'";
-				$sqlccex=mysql_query($ccextis,$conexion) or die (mysql_error());
-				$numcc=mysql_num_rows($sqlccex);
+				$sqlccex=$conexion->query($ccextis) or die (mysqli_error());
+				$numcc=$sqlccex->num_rows;
 				if ($numcc>0) {
 					echo "2";
 				}
 				else{
-					$ingresar="INSERT into usuarios(cc_us,nom_ap_us,tel_us,mov_us,direc_us,estd_us,fecr_us) 
-						values('$b','$a','$d','$e','$f','1','$hoy')";
-					mysql_query($ingresar,$conexion) or die (mysql_error());
+					$ingresar="INSERT into usuarios(cc_us,nom_ap_us,tel_us,mov_us,direc_us,estd_us,fecr_us,teltwo) 
+						values('$b','$a','$d','$e','$f','1','$hoy','$g')";
+					$conexion->query($ingresar) or die (mysqli_error());
 					echo "3";
 				}
 			}
 		}
 		else{
 			$exis_corre="SELECT * from usuarios where cor_us='$c'";
-			$sql_excor=mysql_query($exis_corre,$conexion) or die (mysql_error());
-			$numcorreo=mysql_num_rows($sql_excor);
+			$sql_excor=$conexion->query($exis_corre) or die (mysqli_error());
+			$numcorreo=$sql_excor->num_rows;
 			if ($numcorreo>0) {
 				echo "4";
 			}
@@ -54,9 +55,9 @@
 					$caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012456789";
 					$longitud=8;
 					$codigoal=rand_code($caracteres,$longitud);
-					$ingresar="INSERT into usuarios(nom_ap_us,cor_us,tel_us,mov_us,direc_us,estd_us,pass_us,fecr_us) 
-						values('$a','$c','$d','$e','$f','1','$codigoal','$hoy')";
-					mysql_query($ingresar,$conexion) or die (mysql_error());
+					$ingresar="INSERT into usuarios(nom_ap_us,cor_us,tel_us,mov_us,direc_us,estd_us,pass_us,fecr_us,teltwo) 
+						values('$a','$c','$d','$e','$f','1','$codigoal','$hoy','$g')";
+					$conexion->query($ingresar) or die (mysqli_error());
 					include '../../../miler/class.phpmailer.php';
 					$mail=new PHPMailer();
 					$body="<section style='max-width:1100px;'>
@@ -101,8 +102,8 @@
 				}
 				else{
 					$ccextis="SELECT * from usuarios where cc_us='$b'";
-					$sqlccex=mysql_query($ccextis,$conexion) or die (mysql_error());
-					$numcc=mysql_num_rows($sqlccex);
+					$sqlccex=$conexion->query($ccextis) or die (mysqli_error());
+					$numcc=$sqlccex->num_rows;
 					if ($numcc>0) {
 						echo "2";
 					}
@@ -110,9 +111,9 @@
 						$caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ012456789";
 						$longitud=8;
 						$codigoal=rand_code($caracteres,$longitud);
-						$ingresar="INSERT into usuarios(cc_us,nom_ap_us,cor_us,tel_us,mov_us,direc_us,estd_us,pass_us,fecr_us) 
-							values('$b','$a','$c','$d','$e','$f','1','$codigoal','$hoy')";
-						mysql_query($ingresar,$conexion) or die (mysql_error());
+						$ingresar="INSERT into usuarios(cc_us,nom_ap_us,cor_us,tel_us,mov_us,direc_us,estd_us,pass_us,fecr_us,teltwo) 
+							values('$b','$a','$c','$d','$e','$f','1','$codigoal','$hoy','$g')";
+						$conexion->query($ingresar) or die (mysqli_error());
 						include '../../../miler/class.phpmailer.php';
 						$mail=new PHPMailer();
 						$body="<section style='max-width:1100px;'>
